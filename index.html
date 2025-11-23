@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Self Construction | SAS 1 Final Project</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              earth: {
+                50: "#faf9f6", // Off white
+                100: "#f5f0e6", // Sand
+                200: "#e6dcc4",
+                300: "#d6c4a0",
+                400: "#c6aa7b",
+                500: "#b08955", // Light Brown
+                600: "#9c7242",
+                700: "#7d5a35",
+                800: "#63472d",
+                900: "#523b28",
+              },
+              terracotta: {
+                500: "#E07A5F", // Warm Accent
+                600: "#C86045",
+              },
+              sage: {
+                500: "#81B29A", // Nature Accent
+                600: "#6B9A84",
+              },
+              charcoal: "#3D405B",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Inter"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #faf9f6;
+        background-image: radial-gradient(
+            at 0% 0%,
+            rgba(224, 122, 95, 0.08) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(129, 178, 154, 0.1) 0px,
+            transparent 50%
+          );
+        background-attachment: fixed;
+        color: #3d405b;
+      }
+
+      /* Transitions */
+      .page-section {
+        display: none;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+      }
+
+      .page-section.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+        animation: fadeSlideUp 0.5s forwards;
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Card Hover Effects */
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+          0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      }
+
+      /* Glassmorphism */
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Nav Link Animation */
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #e07a5f;
+        transition: width 0.3s;
+      }
+      .nav-link:hover::after,
+      .nav-link.active-link::after {
+        width: 100%;
+      }
+
+      /* Hide scrollbar for clean look in some overflow areas */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col font-sans">
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <!-- Logo -->
+          <div
+            class="flex-shrink-0 flex items-center cursor-pointer group"
+            onclick="showPage('home')"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center text-white mr-3 font-serif font-bold text-xl shadow-lg group-hover:bg-terracotta-600 transition"
+            >
+              S
+            </div>
+            <div>
+              <span
+                class="block text-lg font-serif font-bold text-charcoal tracking-wide group-hover:text-terracotta-600 transition"
+                >SELF</span
+              >
+              <span
+                class="block text-xs text-gray-500 uppercase tracking-widest -mt-1"
+                >Construction</span
+              >
+            </div>
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex space-x-8 items-center">
+            <button
+              onclick="showPage('home')"
+              id="nav-home"
+              class="nav-link active-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Overview
+            </button>
+            <button
+              onclick="showPage('part1')"
+              id="nav-part1"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Reflections
+            </button>
+            <button
+              onclick="showPage('part2')"
+              id="nav-part2"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Social Mirror
+            </button>
+            <button
+              onclick="showPage('part3')"
+              id="nav-part3"
+              class="px-5 py-2.5 bg-terracotta-500 text-white rounded-full text-sm font-medium shadow-md hover:bg-terracotta-600 hover:shadow-lg transition transform hover:-translate-y-0.5"
+            >
+              Manifestos
+            </button>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden flex items-center">
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-gray-600 hover:text-terracotta-500 focus:outline-none p-2"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Dropdown -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 absolute w-full shadow-lg"
+      >
+        <div class="px-4 py-3 space-y-2">
+          <button
+            onclick="showPage('home'); toggleMobileMenu()"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Overview
+          </button>
+          <button
+            onclick="showPage('part1'); toggleMobileMenu()"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Reflections
+          </button>
+          <button
+            onclick="showPage('part2'); toggleMobileMenu()"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Social Mirror
+          </button>
+          <button
+            onclick="showPage('part3'); toggleMobileMenu()"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-terracotta-600 hover:bg-terracotta-50 transition font-bold"
+          >
+            My Manifestos
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-6xl">
+      <!-- ================= HOME PAGE ================= -->
+      <div id="home" class="page-section active">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-12 mb-20"
+        >
+          <!-- Text Content -->
+          <div class="md:w-1/2 text-center md:text-left">
+            <div
+              class="inline-block px-3 py-1 bg-sage-500/10 text-sage-600 text-xs font-bold tracking-widest uppercase rounded-full mb-6"
+            >
+              Final Project &bull; SAS 1
+            </div>
+            <h1
+              class="text-5xl md:text-6xl font-serif font-bold text-charcoal mb-6 leading-tight"
+            >
+              Knowing
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-terracotta-500 to-sage-500"
+                >Yourself</span
+              >
+              is the beginning of wisdom.
+            </h1>
+            <p
+              class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0"
+            >
+              A curated portfolio exploring the biological, social, and
+              psychological dimensions that construct who I am.
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+            >
+              <button
+                onclick="showPage('part1')"
+                class="px-8 py-3.5 bg-charcoal text-white rounded-full font-medium shadow-lg hover:bg-gray-800 transition hover:-translate-y-1"
+              >
+                My Reflection
+              </button>
+              <button
+                onclick="showPage('part3')"
+                class="px-8 py-3.5 bg-white text-charcoal border border-gray-200 rounded-full font-medium shadow-sm hover:bg-earth-50 transition"
+              >
+                View Manifesto
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Image / Visual -->
+          <div class="md:w-1/2 relative flex justify-center">
+            <!-- Abstract decorative blob -->
+            <div
+              class="absolute inset-0 bg-gradient-to-tr from-terracotta-500/20 to-sage-500/20 rounded-full blur-3xl transform scale-90"
+            ></div>
+            <div
+              class="relative z-10 p-4 bg-white rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition duration-500"
+            >
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWcdArgoKbp3GiY748RtA_T9laJcaQ2L3jeg&s"
+                alt="Portrait"
+                class="w-64 h-80 object-cover rounded-lg filter grayscale hover:grayscale-0 transition duration-500"
+              />
+              <div
+                class="absolute bottom-[-20px] right-[-20px] bg-white p-4 rounded-lg shadow-lg border-l-4 border-terracotta-500 max-w-[200px]"
+              >
+                <p class="font-serif text-sm italic text-gray-600">
+                  "The unexamined life is not worth living."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Preview Grid -->
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            onclick="showPage('part1')"
+            class="group cursor-pointer glass-card p-8 rounded-2xl hover-lift border-t-4 border-terracotta-500"
+          >
+            <div
+              class="w-12 h-12 bg-terracotta-100 rounded-full flex items-center justify-center text-terracotta-600 text-xl mb-4 group-hover:bg-terracotta-500 group-hover:text-white transition"
+            >
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl mb-2 text-charcoal">
+              Dimensions
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              A deep dive into the 8 distinct modules of the course, applying
+              psychological theories to my personal history.
+            </p>
+            <div
+              class="mt-4 flex items-center text-terracotta-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition transform translate-x-[-10px] group-hover:translate-x-0"
+            >
+              Read Reflection <i class="fas fa-arrow-right ml-2"></i>
+            </div>
+          </div>
+
+          <div
+            onclick="showPage('part2')"
+            class="group cursor-pointer glass-card p-8 rounded-2xl hover-lift border-t-4 border-sage-500"
+          >
+            <div
+              class="w-12 h-12 bg-sage-100 rounded-full flex items-center justify-center text-sage-600 text-xl mb-4 group-hover:bg-sage-500 group-hover:text-white transition"
+            >
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl mb-2 text-charcoal">
+              Social Mirror
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Analyzing how the world perceives me versus how I perceive myself
+              through honest interviews.
+            </p>
+            <div
+              class="mt-4 flex items-center text-sage-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition transform translate-x-[-10px] group-hover:translate-x-0"
+            >
+              See Feedback <i class="fas fa-arrow-right ml-2"></i>
+            </div>
+          </div>
+
+          <div
+            onclick="showPage('part3')"
+            class="group cursor-pointer glass-card p-8 rounded-2xl hover-lift border-t-4 border-earth-500"
+          >
+            <div
+              class="w-12 h-12 bg-earth-200 rounded-full flex items-center justify-center text-earth-700 text-xl mb-4 group-hover:bg-earth-500 group-hover:text-white transition"
+            >
+              <i class="fas fa-compass"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl mb-2 text-charcoal">
+              Manifestos
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Concrete declarations of purpose, health, and future intent to
+              guide my path forward.
+            </p>
+            <div
+              class="mt-4 flex items-center text-earth-700 text-sm font-medium opacity-0 group-hover:opacity-100 transition transform translate-x-[-10px] group-hover:translate-x-0"
+            >
+              View Goals <i class="fas fa-arrow-right ml-2"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PART 1: REFLECTIONS ================= -->
+      <div id="part1" class="page-section">
+        <div class="mb-12 text-center max-w-2xl mx-auto">
+          <span
+            class="text-terracotta-500 font-bold tracking-wider text-sm uppercase"
+            >Part One</span
+          >
+          <h2
+            class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-6"
+          >
+            Dimensions of Self
+          </h2>
+          <p class="text-gray-600">
+            Connecting course concepts to personal experience. Each card
+            represents a foundational block of my identity.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Card Template -->
+          <article
+            class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+          >
+            <div
+              class="h-2 bg-gradient-to-r from-terracotta-500 to-orange-300"
+            ></div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3
+                  class="font-serif font-bold text-xl text-gray-800 group-hover:text-terracotta-600 transition"
+                >
+                  Perspectives
+                </h3>
+                <i
+                  class="fas fa-eye text-terracotta-200 text-2xl group-hover:text-terracotta-500 transition"
+                ></i>
+              </div>
+              <p
+                class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3"
+              >
+                Module 1
+              </p>
+              <p
+                class="text-sm text-gray-600 italic mb-4 border-l-2 border-terracotta-200 pl-3"
+              >
+                "How has my definition of self changed over time?"
+              </p>
+              <div class="text-gray-700 text-sm leading-relaxed">
+                [Reflect here on philosophical or psychological perspectives
+                learned in class. Discuss the shift from childhood innocence to
+                adult awareness.]
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+          >
+            <div class="h-2 bg-gradient-to-r from-red-500 to-pink-400"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3
+                  class="font-serif font-bold text-xl text-gray-800 group-hover:text-red-600 transition"
+                >
+                  Biological
+                </h3>
+                <i
+                  class="fas fa-dna text-red-200 text-2xl group-hover:text-red-500 transition"
+                ></i>
+              </div>
+              <p
+                class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3"
+              >
+                Module 2
+              </p>
+              <p
+                class="text-sm text-gray-600 italic mb-4 border-l-2 border-red-200 pl-3"
+              >
+                "Nature vs. Nurture."
+              </p>
+              <div class="text-gray-700 text-sm leading-relaxed">
+                [Analyze your genetic traits. Which parts of you are inherited?
+                Which are learned? Discuss physical development.]
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+          >
+            <div
+              class="h-2 bg-gradient-to-r from-purple-500 to-indigo-400"
+            ></div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3
+                  class="font-serif font-bold text-xl text-gray-800 group-hover:text-purple-600 transition"
+                >
+                  Identity
+                </h3>
+                <i
+                  class="fas fa-fingerprint text-purple-200 text-2xl group-hover:text-purple-500 transition"
+                ></i>
+              </div>
+              <p
+                class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3"
+              >
+                Module 3
+              </p>
+              <p
+                class="text-sm text-gray-600 italic mb-4 border-l-2 border-purple-200 pl-3"
+              >
+                "The construction of personality."
+              </p>
+              <div class="text-gray-700 text-sm leading-relaxed">
+                [Discuss results from personality tests (MBTI/Big 5). Are you an
+                introvert or extrovert? How does this affect your life?]
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+          >
+            <div
+              class="h-2 bg-gradient-to-r from-orange-500 to-yellow-400"
+            ></div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3
+                  class="font-serif font-bold text-xl text-gray-800 group-hover:text-orange-600 transition"
+                >
+                  Culture
+                </h3>
+                <i
+                  class="fas fa-globe-asia text-orange-200 text-2xl group-hover:text-orange-500 transition"
+                ></i>
+              </div>
+              <p
+                class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3"
+              >
+                Module 4
+              </p>
+              <p
+                class="text-sm text-gray-600 italic mb-4 border-l-2 border-orange-200 pl-3"
+              >
+                "Roots and wings."
+              </p>
+              <div class="text-gray-700 text-sm leading-relaxed">
+                [Reflect on your ethnicity, family traditions, and cultural
+                values. How do they dictate your behavior?]
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+          >
+            <div class="h-2 bg-gradient-to-r from-pink-500 to-rose-400"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3
+                  class="font-serif font-bold text-xl text-gray-800 group-hover:text-pink-600 transition"
+                >
+                  Body Image
+                </h3>
+                <i
+                  class="fas fa-heart text-pink-200 text-2xl group-hover:text-pink-500 transition"
+                ></i>
+              </div>
+              <p
+                class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3"
+              >
+                Module 5
+              </p>
+              <p
+                class="text-sm text-gray-600 italic mb-4 border-l-2 border-pink-200 pl-3"
+              >
+                "Comfort in my own skin."
+              </p>
+              <div class="text-gray-700 text-sm leading-relaxed">
+                [Discuss self-esteem, physical appearance, and sexuality. How
+                does society influence how you see your body?]
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+          >
+            <div class="h-2 bg-gradient-to-r from-sage-500 to-green-400"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3
+                  class="font-serif font-bold text-xl text-gray-800 group-hover:text-sage-600 transition"
+                >
+                  Mental Health
+                </h3>
+                <i
+                  class="fas fa-brain text-sage-200 text-2xl group-hover:text-sage-500 transition"
+                ></i>
+              </div>
+              <p
+                class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3"
+              >
+                Module 6
+              </p>
+              <p
+                class="text-sm text-gray-600 italic mb-4 border-l-2 border-sage-200 pl-3"
+              >
+                "Caring for the mind."
+              </p>
+              <div class="text-gray-700 text-sm leading-relaxed">
+                [What are your stressors? How do you cope? Reflect on the
+                importance of mental hygiene in your daily routine.]
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ================= PART 2: INTERVIEWS ================= -->
+      <div id="part2" class="page-section">
+        <div class="mb-12 text-center max-w-2xl mx-auto">
+          <span class="text-sage-600 font-bold tracking-wider text-sm uppercase"
+            >Part Two</span
+          >
+          <h2
+            class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-6"
+          >
+            The Social Mirror
+          </h2>
+          <p class="text-gray-600">
+            Perception vs. Reality. A synthesis of 2+ interviews with friends
+            and family.
+          </p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+          <!-- Sidebar / Key Stats -->
+          <div class="md:w-1/3 w-full">
+            <div
+              class="bg-charcoal text-white p-8 rounded-2xl shadow-xl relative overflow-hidden"
+            >
+              <div class="relative z-10">
+                <h3 class="font-serif text-2xl mb-4">Key Descriptors</h3>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="px-3 py-1 bg-white/10 rounded-full text-sm"
+                    >Hardworking</span
+                  >
+                  <span class="px-3 py-1 bg-white/10 rounded-full text-sm"
+                    >Quiet</span
+                  >
+                  <span class="px-3 py-1 bg-white/10 rounded-full text-sm"
+                    >Creative</span
+                  >
+                  <span class="px-3 py-1 bg-white/10 rounded-full text-sm"
+                    >Reliable</span
+                  >
+                </div>
+                <div class="border-t border-white/20 pt-6">
+                  <h4 class="text-sm font-bold text-gray-400 uppercase mb-2">
+                    My Reaction
+                  </h4>
+                  <p class="text-sm text-gray-300 italic">
+                    "I was surprised that people see me as confident, when
+                    internally I often feel unsure."
+                  </p>
+                </div>
+              </div>
+              <!-- Decorative circle -->
+              <div
+                class="absolute -bottom-10 -right-10 w-40 h-40 bg-terracotta-500 rounded-full opacity-20"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Main Text Content -->
+          <div class="md:w-2/3 w-full">
+            <div
+              class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100"
+            >
+              <i
+                class="fas fa-quote-left text-4xl text-sage-200 mb-6 block"
+              ></i>
+
+              <div
+                class="prose prose-lg text-gray-700 font-light leading-relaxed"
+              >
+                <p class="mb-4">
+                  <span class="font-bold text-charcoal">Introduction:</span> I
+                  interviewed two people close to me to understand how my
+                  internal self-concept aligns with my external presentation.
+                </p>
+                <p class="mb-4">
+                  [Start writing your summary here. According to my interview
+                  with Person A (Mother) and Person B (Best Friend), the common
+                  theme in how they perceive me is resilience. They both
+                  mentioned times where I overcame obstacles...]
+                </p>
+                <p class="mb-4">
+                  [Person A described me as "stoic," which was surprising
+                  because I usually see myself as quite emotional. This suggests
+                  I may be masking my feelings more than I realize.]
+                </p>
+                <p class="mb-4">
+                  [Person B focused more on my humor and creativity, traits I
+                  often downplay. This feedback encourages me to embrace my
+                  artistic side more openly.]
+                </p>
+                <p>
+                  <span class="font-bold text-charcoal">Conclusion:</span>
+                  Ultimately, the "Social Mirror" showed me that I am perceived
+                  as more capable than I give myself credit for.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PART 3: MANIFESTOS ================= -->
+      <div id="part3" class="page-section">
+        <div class="mb-12 text-center max-w-2xl mx-auto">
+          <span
+            class="text-earth-600 font-bold tracking-wider text-sm uppercase"
+            >Part Three</span
+          >
+          <h2
+            class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-6"
+          >
+            Future Manifestos
+          </h2>
+          <p class="text-gray-600">
+            Contracts with myself. Declarations of purpose and holistic health.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Personal Manifesto -->
+          <div
+            class="bg-white rounded-2xl shadow-lg border-t-8 border-terracotta-500 overflow-hidden hover:shadow-2xl transition duration-500 flex flex-col"
+          >
+            <div class="p-8 md:p-12 bg-earth-50/50 flex-grow">
+              <div class="flex items-center gap-3 mb-6">
+                <div
+                  class="p-3 bg-terracotta-100 rounded-lg text-terracotta-600"
+                >
+                  <i class="fas fa-star text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-serif font-bold text-charcoal">
+                  Personal Manifesto
+                </h3>
+              </div>
+
+              <div class="space-y-6">
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-200 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">
+                      I believe that...
+                    </h4>
+                    <p class="text-gray-600 text-sm">
+                      [Insert core belief, e.g., kindness is the highest form of
+                      intelligence.]
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-300 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">
+                      I promise to...
+                    </h4>
+                    <p class="text-gray-600 text-sm">
+                      [Insert promise, e.g., never stop learning despite the
+                      fear of failure.]
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-400 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">
+                      My purpose is...
+                    </h4>
+                    <p class="text-gray-600 text-sm">
+                      [Insert purpose, e.g., to create things that help others
+                      feel understood.]
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-terracotta-500 p-4 text-center text-white text-sm font-medium tracking-wide"
+            >
+              SIGNED: [YOUR NAME]
+            </div>
+          </div>
+
+          <!-- Health Manifesto -->
+          <div
+            class="bg-sage-600 rounded-2xl shadow-lg border-t-8 border-sage-800 overflow-hidden hover:shadow-2xl transition duration-500 flex flex-col text-white"
+          >
+            <div class="p-8 md:p-12 bg-sage-600 flex-grow relative">
+              <!-- Background Pattern -->
+              <div
+                class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-bl-full"
+              ></div>
+
+              <div class="flex items-center gap-3 mb-6 relative z-10">
+                <div class="p-3 bg-white/20 rounded-lg text-white">
+                  <i class="fas fa-leaf text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-serif font-bold">Health Manifesto</h3>
+              </div>
+
+              <div class="space-y-6 relative z-10">
+                <div class="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-running text-sage-200"></i>
+                    <h4 class="font-bold text-sage-100">Physical</h4>
+                  </div>
+                  <p class="text-white text-sm opacity-90">
+                    I will honor my body by [daily movement/sleeping 8 hours].
+                  </p>
+                </div>
+
+                <div class="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-brain text-sage-200"></i>
+                    <h4 class="font-bold text-sage-100">Mental</h4>
+                  </div>
+                  <p class="text-white text-sm opacity-90">
+                    I will protect my peace by [meditating/limiting social
+                    media].
+                  </p>
+                </div>
+
+                <div class="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-apple-alt text-sage-200"></i>
+                    <h4 class="font-bold text-sage-100">Nutritional</h4>
+                  </div>
+                  <p class="text-white text-sm opacity-90">
+                    I will fuel myself with [whole foods/water].
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-sage-800 p-4 text-center text-white text-sm font-medium tracking-wide"
+            >
+              COMMITMENT TO SELF
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-12 border-t border-gray-800">
+      <div class="container mx-auto px-4 text-center">
+        <div
+          class="w-12 h-12 bg-terracotta-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 font-serif font-bold text-xl"
+        >
+          S
+        </div>
+        <p class="mb-4 font-serif text-xl">
+          "The self is not something ready-made, but something in continuous
+          formation."
+        </p>
+        <p class="text-gray-500 text-sm">
+          &copy; 2025 Self Construction Project • Designed for SAS 1
+        </p>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll(".page-section");
+        pages.forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        const selectedPage = document.getElementById(pageId);
+        if (selectedPage) {
+          selectedPage.classList.add("active");
+        }
+
+        // Update Navigation Active State (Desktop)
+        const navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach((link) => {
+          link.classList.remove("active-link");
+          link.classList.remove("text-gray-900");
+          link.classList.add("text-gray-600");
+        });
+
+        const activeBtn = document.getElementById("nav-" + pageId);
+        if (activeBtn) {
+          activeBtn.classList.add("active-link");
+          activeBtn.classList.remove("text-gray-600");
+          activeBtn.classList.add("text-gray-900");
+        }
+
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Initialize Home Page
+      document.addEventListener("DOMContentLoaded", () => {
+        showPage("home");
+      });
+    </script>
+  </body>
+</html>

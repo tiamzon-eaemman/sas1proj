@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Self Construction | SAS 1 Final Project</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Typography -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* Custom Styles for "Journal" Aesthetic */
+      :root {
+        --paper-color: #fdfbf7;
+        --ink-color: #2c3e50;
+        --accent-color: #7d9d9c; /* Sage/Teal */
+        --highlight-color: #e4d8b4; /* Muted Gold */
+      }
+
+      body {
+        background-color: #f0f2f5;
+        color: var(--ink-color);
+        font-family: "Lora", serif; /* Serif font for main text (Reading experience) */
+      }
+
+      h1,
+      h2,
+      h3,
+      .nav-item {
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Hide all sections by default, JS will toggle active class */
+      .page-section {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .page-section.active {
+        display: block;
+        opacity: 1;
+        animation: fadeIn 0.6s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Notebook Card Effect */
+      .journal-card {
+        background: var(--paper-color);
+        border-left: 4px solid var(--accent-color);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+        background-size: 100% 2rem; /* Lined paper effect */
+        line-height: 2rem;
+      }
+
+      /* Clean card for non-lined content */
+      .clean-card {
+        background: white;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+      }
+
+      /* Nav Link Active State */
+      .nav-link.active-link {
+        border-bottom: 2px solid var(--accent-color);
+        color: var(--accent-color);
+      }
+
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo / Name -->
+          <div
+            class="flex-shrink-0 flex items-center cursor-pointer"
+            onclick="showPage('home')"
+          >
+            <span class="text-xl font-bold text-gray-800 tracking-wider"
+              >MY<span class="text-teal-600">SELF</span></span
+            >
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex space-x-8">
+            <button
+              onclick="showPage('home')"
+              id="nav-home"
+              class="nav-link active-link px-3 py-2 text-sm font-medium hover:text-teal-600 transition"
+            >
+              Home
+            </button>
+            <button
+              onclick="showPage('part1')"
+              id="nav-part1"
+              class="nav-link px-3 py-2 text-sm font-medium hover:text-teal-600 transition"
+            >
+              Part 1: Reflections
+            </button>
+            <button
+              onclick="showPage('part2')"
+              id="nav-part2"
+              class="nav-link px-3 py-2 text-sm font-medium hover:text-teal-600 transition"
+            >
+              Part 2: Interviews
+            </button>
+            <button
+              onclick="showPage('part3')"
+              id="nav-part3"
+              class="nav-link px-3 py-2 text-sm font-medium hover:text-teal-600 transition"
+            >
+              Part 3: Manifestos
+            </button>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden flex items-center">
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-gray-600 hover:text-gray-900 focus:outline-none"
+            >
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Menu Dropdown -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <button
+          onclick="showPage('home'); toggleMobileMenu()"
+          class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >
+          Home
+        </button>
+        <button
+          onclick="showPage('part1'); toggleMobileMenu()"
+          class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >
+          Part 1: Reflections
+        </button>
+        <button
+          onclick="showPage('part2'); toggleMobileMenu()"
+          class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >
+          Part 2: Interviews
+        </button>
+        <button
+          onclick="showPage('part3'); toggleMobileMenu()"
+          class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >
+          Part 3: Manifestos
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+      <!-- ================= HOME PAGE ================= -->
+      <div id="home" class="page-section active">
+        <div class="text-center py-16">
+          <div
+            class="inline-block p-2 rounded-full border-2 border-teal-500 mb-6"
+          >
+            <img
+              src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix"
+              alt="Avatar Placeholder"
+              class="w-32 h-32 rounded-full bg-teal-50"
+            />
+          </div>
+          <h1 class="text-5xl font-bold text-gray-800 mb-4">
+            The Construction of Self
+          </h1>
+          <p class="text-xl text-gray-600 italic mb-8">Final Project, SAS 1</p>
+          <p class="max-w-2xl mx-auto text-gray-700 leading-relaxed mb-10">
+            "Knowing yourself is the beginning of all wisdom." <br />
+            This portfolio documents my journey of understanding who I was, who
+            I am, and who I am becoming. It explores biological influences,
+            social perceptions, and my personal manifestos for the future.
+          </p>
+          <button
+            onclick="showPage('part1')"
+            class="bg-teal-600 text-white px-8 py-3 rounded-full hover:bg-teal-700 transition shadow-lg transform hover:-translate-y-1"
+          >
+            Begin the Journey
+          </button>
+        </div>
+
+        <!-- Rubric/Info Cards -->
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          <div
+            class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-blue-400"
+          >
+            <h3 class="font-bold text-lg mb-2">Part 1: Reflection</h3>
+            <p class="text-sm text-gray-600">
+              Deep dive into the 8 modules of the course and how they apply to
+              my life.
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-yellow-400"
+          >
+            <h3 class="font-bold text-lg mb-2">Part 2: Social Mirror</h3>
+            <p class="text-sm text-gray-600">
+              Analyzing how others perceive me through interviews and feedback.
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-green-400"
+          >
+            <h3 class="font-bold text-lg mb-2">Part 3: Manifestos</h3>
+            <p class="text-sm text-gray-600">
+              Declarations of purpose and health to guide my future self.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PART 1: REFLECTIONS ================= -->
+      <div id="part1" class="page-section">
+        <div class="mb-10 text-center">
+          <h2 class="text-4xl font-bold text-gray-800 mb-2">
+            Part 1: Dimensions of Self
+          </h2>
+          <div class="w-20 h-1 bg-teal-500 mx-auto"></div>
+          <p class="mt-4 text-gray-600">
+            Relating course modules to my current self-status.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Module 1 -->
+          <article class="clean-card p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-teal-100 p-2 rounded-lg text-teal-600 mr-3">
+                <i class="fas fa-eye"></i>
+              </div>
+              <h3 class="text-xl font-bold">Perspectives of Self</h3>
+            </div>
+            <p class="text-gray-700 italic">
+              "How has my definition of self changed over time?"
+            </p>
+            <div class="mt-4 text-gray-600 text-sm">
+              [Write your reflection here. Discuss philosophical or
+              psychological perspectives learned in class and apply them to your
+              history.]
+            </div>
+          </article>
+
+          <!-- Module 2 -->
+          <article class="clean-card p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-red-100 p-2 rounded-lg text-red-600 mr-3">
+                <i class="fas fa-dna"></i>
+              </div>
+              <h3 class="text-xl font-bold">Biological Influences</h3>
+            </div>
+            <p class="text-gray-700 italic">"Nature vs. Nurture in my life."</p>
+            <div class="mt-4 text-gray-600 text-sm">
+              [Reflect on your genetics, physical traits, and biological factors
+              that shape who you are.]
+            </div>
+          </article>
+
+          <!-- Module 3 -->
+          <article class="clean-card p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-purple-100 p-2 rounded-lg text-purple-600 mr-3">
+                <i class="fas fa-user-circle"></i>
+              </div>
+              <h3 class="text-xl font-bold">Identity & Personality</h3>
+            </div>
+            <p class="text-gray-700 italic">"Who am I really?"</p>
+            <div class="mt-4 text-gray-600 text-sm">
+              [Discuss your personality type (e.g., Big Five, MBTI) and how your
+              identity has developed through adolescence to now.]
+            </div>
+          </article>
+
+          <!-- Module 4 -->
+          <article class="clean-card p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-orange-100 p-2 rounded-lg text-orange-600 mr-3">
+                <i class="fas fa-globe-asia"></i>
+              </div>
+              <h3 class="text-xl font-bold">Culture & Ethnicity</h3>
+            </div>
+            <p class="text-gray-700 italic">"The roots that ground me."</p>
+            <div class="mt-4 text-gray-600 text-sm">
+              [How has your culture, traditions, and ethnicity shaped your
+              values and behaviors?]
+            </div>
+          </article>
+
+          <!-- Module 5 -->
+          <article class="clean-card p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-pink-100 p-2 rounded-lg text-pink-600 mr-3">
+                <i class="fas fa-heart"></i>
+              </div>
+              <h3 class="text-xl font-bold">Sexuality & Body Image</h3>
+            </div>
+            <p class="text-gray-700 italic">"Comfort in my own skin."</p>
+            <div class="mt-4 text-gray-600 text-sm">
+              [Reflect on body positivity, your understanding of sexuality, and
+              self-esteem related to physical appearance.]
+            </div>
+          </article>
+
+          <!-- Module 6 -->
+          <article class="clean-card p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-green-100 p-2 rounded-lg text-green-600 mr-3">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3 class="text-xl font-bold">Mental Health</h3>
+            </div>
+            <p class="text-gray-700 italic">"Caring for the mind."</p>
+            <div class="mt-4 text-gray-600 text-sm">
+              [Discuss your strategies for wellbeing, stress management, and
+              your current mental health status.]
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ================= PART 2: INTERVIEWS ================= -->
+      <div id="part2" class="page-section">
+        <div class="mb-10 text-center">
+          <h2 class="text-4xl font-bold text-gray-800 mb-2">
+            Part 2: The Social Mirror
+          </h2>
+          <div class="w-20 h-1 bg-teal-500 mx-auto"></div>
+          <p class="mt-4 text-gray-600">
+            How others describe me (Based on 2+ interviews).
+          </p>
+        </div>
+
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+          <div class="flex items-start mb-6">
+            <i class="fas fa-quote-left text-4xl text-gray-200 mr-4"></i>
+            <div>
+              <h3 class="text-2xl font-bold mb-2">Summary of Impressions</h3>
+              <p class="text-gray-500 text-sm mb-4">Approx. 300 Words</p>
+            </div>
+          </div>
+
+          <!-- Placeholder for the user's essay -->
+          <div
+            class="prose prose-lg text-gray-700 leading-relaxed journal-card p-4 rounded min-h-[300px]"
+          >
+            <p>
+              [Start writing your summary here. According to my interview with
+              Person A and Person B, the common theme in how they perceive me
+              is...]
+            </p>
+            <p>
+              [Person A described me as... which was surprising because I
+              usually see myself as...]
+            </p>
+            <p>
+              [Person B focused more on my work ethic/personality, stating that
+              I am...]
+            </p>
+            <p>
+              [Conclude with how these external perceptions align or clash with
+              your internal self-concept.]
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PART 3: MANIFESTOS ================= -->
+      <div id="part3" class="page-section">
+        <div class="mb-10 text-center">
+          <h2 class="text-4xl font-bold text-gray-800 mb-2">
+            Part 3: Manifestos
+          </h2>
+          <div class="w-20 h-1 bg-teal-500 mx-auto"></div>
+          <p class="mt-4 text-gray-600">My declarations for the future.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10">
+          <!-- Personal Manifesto -->
+          <div
+            class="bg-slate-800 text-white p-8 rounded-lg shadow-xl relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white opacity-10 rounded-full"
+            ></div>
+            <h3 class="text-2xl font-bold mb-6 border-b border-gray-600 pb-2">
+              A. Personal Manifesto
+            </h3>
+            <p class="italic text-gray-300 mb-6">
+              "Aligning Life's Purpose, Goals, and Intentions"
+            </p>
+
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <i class="fas fa-star text-yellow-400 mt-1 mr-3"></i>
+                <span>I believe that... [Insert core belief]</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-star text-yellow-400 mt-1 mr-3"></i>
+                <span>I promise to... [Insert promise to self]</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-star text-yellow-400 mt-1 mr-3"></i>
+                <span>My purpose is to... [Insert purpose]</span>
+              </li>
+            </ul>
+            <div class="mt-8 p-4 bg-white/10 rounded italic text-sm">
+              "This is my declaration of who I am and who I strive to be."
+            </div>
+          </div>
+
+          <!-- Health Manifesto -->
+          <div
+            class="bg-teal-700 text-white p-8 rounded-lg shadow-xl relative overflow-hidden"
+          >
+            <div
+              class="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-white opacity-10 rounded-full"
+            ></div>
+            <h3 class="text-2xl font-bold mb-6 border-b border-teal-500 pb-2">
+              B. Health Manifesto
+            </h3>
+            <p class="italic text-teal-100 mb-6">
+              "Principles for Holistic Wellbeing"
+            </p>
+
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <i class="fas fa-heart text-pink-300 mt-1 mr-3"></i>
+                <span
+                  >Physical: I will commit to... [e.g., daily movement]</span
+                >
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-brain text-pink-300 mt-1 mr-3"></i>
+                <span>Mental: I will prioritize... [e.g., mindfulness]</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-apple-alt text-pink-300 mt-1 mr-3"></i>
+                <span>Nutritional: I will nourish my body with...</span>
+              </li>
+            </ul>
+            <div class="mt-8 p-4 bg-white/10 rounded italic text-sm">
+              "My health is the foundation of my ability to serve others and
+              myself."
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+      <div class="container mx-auto px-4 text-center">
+        <p class="mb-2">Created for SAS 1 Final Project</p>
+        <p class="text-gray-500 text-sm">
+          &copy; 2025 Self Construction Project
+        </p>
+      </div>
+    </footer>
+
+    <!-- JavaScript for Functionality -->
+    <script>
+      function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll(".page-section");
+        pages.forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        const selectedPage = document.getElementById(pageId);
+        if (selectedPage) {
+          selectedPage.classList.add("active");
+        }
+
+        // Update Navigation Active State (Desktop)
+        const navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach((link) => {
+          link.classList.remove("active-link");
+          link.classList.remove("text-teal-600"); // Remove active color
+        });
+
+        const activeBtn = document.getElementById("nav-" + pageId);
+        if (activeBtn) {
+          activeBtn.classList.add("active-link");
+          activeBtn.classList.add("text-teal-600");
+        }
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Initialize Home Page
+      document.addEventListener("DOMContentLoaded", () => {
+        showPage("home");
+      });
+    </script>
+  </body>
+</html>
