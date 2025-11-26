@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reflections | Self Construction</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        earth: {
+                            50: "#faf9f6",
+                            100: "#f5f0e6",
+                            200: "#e6dcc4",
+                            300: "#d6c4a0",
+                            400: "#c6aa7b",
+                            500: "#b08955",
+                            600: "#9c7242",
+                            700: "#7d5a35",
+                            800: "#63472d",
+                            900: "#523b28",
+                        },
+                        terracotta: {
+                            500: "#E07A5F",
+                            600: "#C86045",
+                        },
+                        sage: {
+                            500: "#81B29A",
+                            600: "#6B9A84",
+                        },
+                        charcoal: "#3D405B",
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', "serif"],
+                        sans: ['"Inter"', "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #faf9f6;
+            background-image: radial-gradient(at 0% 0%,
+                    rgba(224, 122, 95, 0.08) 0px,
+                    transparent 50%),
+                radial-gradient(at 100% 100%,
+                    rgba(129, 178, 154, 0.1) 0px,
+                    transparent 50%);
+            background-attachment: fixed;
+            color: #3d405b;
+        }
+
+        .fade-in {
+            animation: fadeSlideUp 0.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+                0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #e07a5f;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active-link::after {
+            width: 100%;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans">
+    <nav class="glass sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="overview.html" class="flex-shrink-0 flex items-center cursor-pointer group">
+                    <div
+                        class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center text-white mr-3 font-serif font-bold text-xl shadow-lg group-hover:bg-terracotta-600 transition">
+                        S
+                    </div>
+                    <div>
+                        <span
+                            class="block text-lg font-serif font-bold text-charcoal tracking-wide group-hover:text-terracotta-600 transition">SELF</span>
+                        <span class="block text-xs text-gray-500 uppercase tracking-widest -mt-1">Construction</span>
+                    </div>
+                </a>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="overview.html"
+                        class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2">
+                        Overview
+                    </a>
+                    <a href="reflections.html"
+                        class="nav-link active-link text-sm font-medium text-gray-900 transition py-2">
+                        Reflections
+                    </a>
+                    <a href="social_mirror.html"
+                        class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2">
+                        Interview
+                    </a>
+                    <a
+                    href="about.html"
+                    class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2">
+                    About
+                    </a>
+                    <a href="manifesto.html"
+                        class="px-5 py-2.5 bg-terracotta-500 text-white rounded-full text-sm font-medium shadow-md hover:bg-terracotta-600 hover:shadow-lg transition transform hover:-translate-y-0.5">
+                        Manifestos
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()"
+                        class="text-gray-600 hover:text-terracotta-500 focus:outline-none p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-4 py-3 space-y-2">
+                <a href="overview.html"
+                    class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition">
+                    Overview
+                </a>
+                <a href="reflections.html"
+                    class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-900 bg-earth-100 hover:text-terracotta-600 transition">
+                    Reflections
+                </a>
+                <a href="social_mirror.html"
+                    class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition">
+                    Interview
+                </a>
+                <a
+                href="about.html"
+                class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+                >
+                About
+                 </a>
+                <a href="manifesto.html"
+                    class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-terracotta-600 hover:bg-terracotta-50 transition font-bold">
+                    My Manifestos
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-6xl fade-in">
+        <div class="mb-12 text-center max-w-2xl mx-auto">
+            <span class="text-terracotta-500 font-bold tracking-wider text-sm uppercase">Part One</span>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-6">
+                Dimensions of Self
+            </h2>
+            <p class="text-gray-600">
+                An exploration of the different dimensions that make me who I am. This section breaks down the layers of my self-perception, explaining how they influence me and how I have built them over the years. These are the foundational blocks of my identity, honest reflections from the inside out.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Card Template -->
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-terracotta-500 to-orange-300"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3
+                            class="font-serif font-bold text-xl text-gray-800 group-hover:text-terracotta-600 transition">
+                            Self Perspectives
+                        </h3>
+                        <i
+                            class="fas fa-eye text-terracotta-200 text-2xl group-hover:text-terracotta-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Grounded Self
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-terracotta-200 pl-3">
+                        "How has my definition of self changed over time?"
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        The most defining part of who I am right now is my adaptability,
+                        passion, and reliability, especially in how I consistently show
+                        up no matter the circumstances. I carry myself with quiet
+                        strength, often choosing to be the person others can depend on
+                        even when things are difficult. People usually see me as
+                        independent, someone who can do the things they initially think
+                        I cannot. Recently, having the confidence to join competitions
+                        has reshaped how I see myself and proved how far I can push my
+                        limits. These experiences continue to build a stronger, more
+                        grounded version of me.
+                    </div>
+                </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-red-500 to-pink-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-red-600 transition">
+                            Biological Influences
+                        </h3>
+                        <i class="fas fa-dna text-red-200 text-2xl group-hover:text-red-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Rooted Disposition
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-red-200 pl-3">
+                        "Nature vs. Nurture."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        I've always been naturally calm and observant, and this steady
+                        temperament shapes the way I think, respond, and make sense of
+                        situations around me. Remaining collected in chaotic moments is
+                        something I consciously remind myself of, because I know clearer
+                        thinking leads to better outcomes. I also see parts of myself
+                        reflected in my family, especially the empathy and humbleness
+                        I've grown up around. These inherited traits anchor me and
+                        influence how I move through the world. Altogether, my calm
+                        nature and the values passed down to me form a grounded
+                        foundation for who I am becoming.
+                    </div>
+                </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-purple-500 to-indigo-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-purple-600 transition">
+                            Identity Development
+                        </h3>
+                        <i
+                            class="fas fa-fingerprint text-purple-200 text-2xl group-hover:text-purple-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Searching Self
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-purple-200 pl-3 text-justify">
+                        "The construction of personality."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        I'm currently in a phase of uncertainty, still lost about which path to take, yet I remind
+                        myself that exploring unfamiliar things is part of a long and necessary process.
+                        This confusion doesn't paralyze me; instead, it teaches me to move one step at a time and stay
+                        consistent in becoming a better version of myself.
+                        I also feel suspended between childhood and adulthood, still carrying the desires of my younger
+                        self while learning how to navigate the responsibilities of growing up.
+                        This in-between state pushes me to pursue what truly makes me happy and what I can be passionate
+                        about. My identity right now is a work in progress,
+                        slowly taking shape as I discover what truly belongs to me.
+                    </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-orange-500 to-yellow-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-orange-600 transition">
+                            Cultural and Ethnicity
+                        </h3>
+                        <i
+                            class="fas fa-globe-asia text-orange-200 text-2xl group-hover:text-orange-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        Values and Belonging
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-orange-200 pl-3">
+                        "Roots and wings."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        Growing up in a religious family taught me to always be respectful and kind, principles I
+                        continue to follow because they shape my character and guide my daily choices.
+                        This background gives me a deep sense of connection to my community, where our shared culture
+                        and ethnicity have become an important part of my identity.
+                        I feel grounded by these roots, as they remind me of who I am and the values I carry. When
+                        making decisions,
+                        I often think of what is best for my family, knowing they are the reason I embrace different
+                        cultures with openness and respect.
+                        Altogether, these influences form a cultural foundation that shapes how I see myself and how I
+                        relate to others.
+                    </div>
+                </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-pink-500 to-rose-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-pink-600 transition">
+                            Body Image
+                        </h3>
+                        <i class="fas fa-heart text-pink-200 text-2xl group-hover:text-pink-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Evolving Reflection
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-pink-200 pl-3">
+                        "Comfort in my own skin."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        When I look in the mirror, I see someone who is still growing, someone who can keep improving and
+                        staying healthy for their own sake.
+                        Social media and the people around me influence how I present myself, sometimes inspiring
+                        healthier habits but also creating pressure
+                        and judgment about what a body “should” look like. Even with these external voices, I try to
+                        stay grounded and aware of what truly matters to me.
+                        Lately, becoming more physically active through the gym and jogging has strengthened my
+                        confidence and helped me care for both my mind and body.
+                        These changes remind me that my self-image grows best when it is shaped by my own efforts, not
+                        by outside expectations.
+                    </div>
+                </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-sage-500 to-green-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-sage-600 transition">
+                            Mental Health
+                        </h3>
+                        <i class="fas fa-brain text-sage-200 text-2xl group-hover:text-sage-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Mind in Motion
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-sage-200 pl-3">
+                        "Caring for the mind."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        The uncertainty of my future is the biggest weight on my mind right now, and even when I try to
+                        stay grounded in the present,
+                        the thought of what I “should” be achieving still creates a quiet pressure beneath everything I
+                        do. When overwhelm hits,
+                        I turn to physical activities because they help reset my mood and organize my thoughts in a
+                        clearer, calmer way.
+                        Time spent with friends also becomes a powerful anchor, giving me space to breathe, laugh, and
+                        step outside my worries for a while.
+                        Even with these stressors, I see myself as someone who holds a solid level of mental strength—I
+                        bend, but I don't break.
+                        All of this reminds me that resilience is something I'm actively building, not something I'm
+                        expected to perfect.
+                    </div>
+                </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-blue-600 transition">
+                            Personality
+                        </h3>
+                        <i class="fas fa-puzzle-piece text-blue-200 text-2xl group-hover:text-blue-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Quiet Explorer
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-blue-200 pl-3">
+                        "Understanding my traits."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        I naturally recharge by being alone, finding comfort in the calmness of my own space and the
+                        activities I enjoy.
+                        Even though I prefer solitude, I also like being spontaneous, embracing new experiences without
+                        detailed plans while
+                        reminding myself that every choice carries consequences. When conflict arises, I never react
+                        impulsively;
+                        I choose to step back and let emotions settle before responding. This approach helps me stay
+                        rational and maintain harmony in tense situations.
+                        Altogether, my introversion, flexibility, and calm conflict style shape how I navigate both
+                        myself and the people around me.
+                    </div>
+                </div>
+            </article>
+
+            <article
+                class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                <div class="h-2 bg-gradient-to-r from-violet-500 to-fuchsia-400"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif font-bold text-xl text-gray-800 group-hover:text-violet-600 transition">
+                            Sexuality
+                        </h3>
+                        <i
+                            class="fas fa-venus-mars text-violet-200 text-2xl group-hover:text-violet-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+                        The Honest Self
+                    </p>
+                    <p class="text-sm text-gray-600 italic mb-4 border-l-2 border-violet-200 pl-3">
+                        "Embracing who I am."
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed text-justify">
+                        I find it difficult to be fully open with others because I fear being judged or having my
+                        feelings used against me,
+                        so I tend to be mindful and guarded when expressing myself. When it comes to identity,
+                        I believe in equality and the freedom for everyone, including myself to express who they are
+                        without being confined by society's expectations about gender.
+                        For me, people will always have their own thoughts, but what matters most is staying true to
+                        myself and honoring that freedom.
+                        In relationships, feeling safe means being with someone who understands, cares, and respects me
+                        while still allowing both of us to maintain our individuality.
+                        This balance between connection and personal space is what makes me feel valued and emotionally
+                        secure.
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="bg-charcoal text-white py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <div
+                class="w-12 h-12 bg-terracotta-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 font-serif font-bold text-xl">
+                S
+            </div>
+            <p class="mb-4 font-serif text-xl">
+                "The self is not something ready-made, but something in continuous
+                formation."
+            </p>
+            <p class="text-gray-500 text-sm">
+                &copy; 2025 Self Construction Project • Designed for SAS 1
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+        }
+    </script>
+</body>
+
+</html>

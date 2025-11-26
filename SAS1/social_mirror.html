@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interview | Self Construction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              earth: {
+                50: "#faf9f6",
+                100: "#f5f0e6",
+                200: "#e6dcc4",
+                300: "#d6c4a0",
+                400: "#c6aa7b",
+                500: "#b08955",
+                600: "#9c7242",
+                700: "#7d5a35",
+                800: "#63472d",
+                900: "#523b28",
+              },
+              terracotta: {
+                500: "#E07A5F",
+                600: "#C86045",
+              },
+              sage: {
+                500: "#81B29A",
+                600: "#6B9A84",
+              },
+              charcoal: "#3D405B",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Inter"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #faf9f6;
+        background-image: radial-gradient(
+            at 0% 0%,
+            rgba(224, 122, 95, 0.08) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(129, 178, 154, 0.1) 0px,
+            transparent 50%
+          );
+        background-attachment: fixed;
+        color: #3d405b;
+      }
+
+      .fade-in {
+        animation: fadeSlideUp 0.5s forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #e07a5f;
+        transition: width 0.3s;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active-link::after {
+        width: 100%;
+      }
+
+      /* Custom scrollbar hiding */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex flex-col font-sans">
+    <nav class="glass sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a
+            href="overview.html"
+            class="flex-shrink-0 flex items-center cursor-pointer group"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center text-white mr-3 font-serif font-bold text-xl shadow-lg group-hover:bg-terracotta-600 transition"
+            >
+              S
+            </div>
+            <div>
+              <span
+                class="block text-lg font-serif font-bold text-charcoal tracking-wide group-hover:text-terracotta-600 transition"
+                >SELF</span
+              >
+              <span
+                class="block text-xs text-gray-500 uppercase tracking-widest -mt-1"
+                >Construction</span
+              >
+            </div>
+          </a>
+
+          <div class="hidden md:flex space-x-8 items-center">
+            <a
+              href="overview.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Overview
+            </a>
+            <a
+              href="reflections.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Reflections
+            </a>
+            <a
+              href="social_mirror.html"
+              class="nav-link active-link text-sm font-medium text-gray-900 transition py-2"
+            >
+              Interview
+            </a>
+            <a
+              href="about.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              About
+            </a>
+            <a
+              href="manifesto.html"
+              class="px-5 py-2.5 bg-terracotta-500 text-white rounded-full text-sm font-medium shadow-md hover:bg-terracotta-600 hover:shadow-lg transition transform hover:-translate-y-0.5"
+            >
+              Manifestos
+            </a>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-gray-600 hover:text-terracotta-500 focus:outline-none p-2"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 absolute w-full shadow-lg"
+      >
+        <div class="px-4 py-3 space-y-2">
+          <a
+            href="overview.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Overview
+          </a>
+          <a
+            href="reflections.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Reflections
+          </a>
+          <a
+            href="social_mirror.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-900 bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Interview
+          </a>
+          <a
+            href="about.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            About
+          </a>
+          <a
+            href="manifesto.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-terracotta-600 hover:bg-terracotta-50 transition font-bold"
+          >
+            My Manifestos
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-6xl fade-in">
+      <div class="mb-12 text-center max-w-2xl mx-auto">
+        <span class="text-sage-600 font-bold tracking-wider text-sm uppercase"
+          >Part Two</span
+        >
+        <h2
+          class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-6"
+        >
+          The Unfiltered View
+        </h2>
+        <p class="text-gray-600">
+          This interview was conducted with a college friend and my best friend.
+          It answers the question of how I am perceived by others. It gives
+          their perspective on how they see me and what kind of person I am.
+          This is not just a simple interview; it explores their experiences and
+          observations, allowing me to know myself better.
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <div class="md:w-1/3 w-full flex flex-col gap-6">
+          <div class="w-full">
+            <div
+              class="bg-charcoal text-white p-8 rounded-2xl shadow-xl relative overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group"
+            >
+              <div class="relative z-10">
+                <h3 class="font-serif text-2xl mb-1 flex items-center gap-3">
+                  <i class="fas fa-user-circle text-terracotta-500"></i>
+                  Interviewee 1
+                </h3>
+
+                <h2
+                  class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 mt-2 border-b border-gray-600 pb-2 inline-block"
+                >
+                  Key Descriptors
+                </h2>
+
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Disciplined</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Quiet</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Goal-oriented</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Curious</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Kind</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Warm</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Studious</span
+                  >
+                </div>
+
+                <div class="border-t border-white/20 pt-6">
+                  <h4 class="text-sm font-bold text-gray-400 uppercase mb-2">
+                    College Friend
+                  </h4>
+                  <p class="text-sm text-gray-300 italic">— Zielo</p>
+                </div>
+              </div>
+              <div
+                class="absolute -bottom-10 -right-10 w-40 h-40 bg-terracotta-500 rounded-full opacity-20 group-hover:scale-110 transition-transform duration-500"
+              ></div>
+            </div>
+          </div>
+
+          <div class="w-full">
+            <div
+              class="bg-charcoal text-white p-8 rounded-2xl shadow-xl relative overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group"
+            >
+              <div class="relative z-10">
+                <h3 class="font-serif text-2xl mb-1 flex items-center gap-3">
+                  <i class="fas fa-user-circle text-terracotta-500"></i>
+                  Interviewee 2
+                </h3>
+
+                <h2
+                  class="font-sans text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 mt-2 border-b border-gray-600 pb-2 inline-block"
+                >
+                  Key Descriptors
+                </h2>
+
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Trustworthy</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Expressive</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Quirky</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Straightforward</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/10 rounded-full text-sm hover:bg-terracotta-500 transition-colors duration-200 cursor-default"
+                    >Attentive</span
+                  >
+                </div>
+
+                <div class="border-t border-white/20 pt-6">
+                  <h4 class="text-sm font-bold text-gray-400 uppercase mb-2">
+                    Bestfriend
+                  </h4>
+                  <p class="text-sm text-gray-300 italic">— Djay</p>
+                </div>
+              </div>
+              <div
+                class="absolute -bottom-10 -right-10 w-40 h-40 bg-terracotta-500 rounded-full opacity-20 group-hover:scale-110 transition-transform duration-500"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-2/3 w-full">
+          <div
+            class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100"
+          >
+            <i class="fas fa-quote-left text-4xl text-sage-200 mb-6 block"></i>
+
+            <div
+              class="prose prose-lg text-gray-700 font-light leading-relaxed"
+            >
+              <p class="mb-4 text-justify">
+                After talking to two people who know me pretty well, I realized
+                that their impressions of me actually line up in a lot of ways.
+                Both of them said that I usually look serious or quiet at first,
+                which can make me seem a bit “masungit” to people who don't know
+                me yet. But once they actually spend time with me, that first
+                impression disappears.
+              </p>
+              <p class="mb-4 text-justify">
+                For Zielo, she said I'm actually warm, playful, and someone
+                who's fun to be around. She mentioned that I like to tease
+                people, but in a way that makes things lighter, not annoying.
+                She also sees me as disciplined and hardworking—someone who
+                really tries to give her best in what she does—but still knows
+                how and when to enjoy. For her, I'm the type of person who grows
+                on you the more you get to know me.
+              </p>
+              <p class="mb-4 text-justify">
+                On the other hand, Djay described me as someone with a light and
+                friendly aura. According to her, I leave a good impression
+                because I'm easy to talk to and easy to trust. She also said I'm
+                hardworking and not afraid to take risks, especially when it
+                comes to getting things done. She pointed out my quirky side
+                too—how I can be very vocal about the things I'm interested in
+                and how my facial expressions make it obvious what mood I'm in.
+                For her, I'm fun to hang out with because I actually listen and
+                pay attention.
+              </p>
+              <p class="mb-4 text-justify">
+                Putting both interviews together, they see me as someone who
+                might seem quiet at first but is actually friendly, warm, and
+                hardworking. I'm easygoing, expressive, and someone people feel
+                comfortable with once the conversation starts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-charcoal text-white py-12 border-t border-gray-800">
+      <div class="container mx-auto px-4 text-center">
+        <div
+          class="w-12 h-12 bg-terracotta-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 font-serif font-bold text-xl"
+        >
+          S
+        </div>
+        <p class="mb-4 font-serif text-xl">
+          "The self is not something ready-made, but something in continuous
+          formation."
+        </p>
+        <p class="text-gray-500 text-sm">
+          &copy; 2025 Self Construction Project • Designed for SAS 1
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>

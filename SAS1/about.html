@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me | Self Construction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              earth: {
+                50: "#faf9f6",
+                100: "#f5f0e6",
+                200: "#e6dcc4",
+                300: "#d6c4a0",
+                400: "#c6aa7b",
+                500: "#b08955",
+                600: "#9c7242",
+                700: "#7d5a35",
+                800: "#63472d",
+                900: "#523b28",
+              },
+              terracotta: {
+                500: "#E07A5F",
+                600: "#C86045",
+              },
+              sage: {
+                500: "#81B29A",
+                600: "#6B9A84",
+              },
+              charcoal: "#3D405B",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Inter"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #faf9f6;
+        background-image: radial-gradient(
+            at 0% 0%,
+            rgba(224, 122, 95, 0.08) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(129, 178, 154, 0.1) 0px,
+            transparent 50%
+          );
+        background-attachment: fixed;
+        color: #3d405b;
+      }
+
+      .fade-in {
+        animation: fadeSlideUp 0.5s forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #e07a5f;
+        transition: width 0.3s;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active-link::after {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex flex-col font-sans">
+    <nav class="glass sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a
+            href="overview.html"
+            class="flex-shrink-0 flex items-center cursor-pointer group"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center text-white mr-3 font-serif font-bold text-xl shadow-lg group-hover:bg-terracotta-600 transition"
+            >
+              S
+            </div>
+            <div>
+              <span
+                class="block text-lg font-serif font-bold text-charcoal tracking-wide group-hover:text-terracotta-600 transition"
+                >SELF</span
+              >
+              <span
+                class="block text-xs text-gray-500 uppercase tracking-widest -mt-1"
+                >Construction</span
+              >
+            </div>
+          </a>
+
+          <div class="hidden md:flex space-x-8 items-center">
+            <a
+              href="overview.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Overview
+            </a>
+            <a
+              href="reflections.html"
+              class="nav-link active-link text-sm font-medium text-gray-900 transition py-2"
+            >
+              Reflections
+            </a>
+            <a
+              href="social_mirror.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Interview
+            </a>
+            <a
+              href="about.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              About
+            </a>
+            <a
+              href="manifesto.html"
+              class="px-5 py-2.5 bg-terracotta-500 text-white rounded-full text-sm font-medium shadow-md hover:bg-terracotta-600 hover:shadow-lg transition transform hover:-translate-y-0.5"
+            >
+              Manifestos
+            </a>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-gray-600 hover:text-terracotta-500 focus:outline-none p-2"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 absolute w-full shadow-lg"
+      >
+        <div class="px-4 py-3 space-y-2">
+          <a
+            href="overview.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Overview
+          </a>
+          <a
+            href="reflections.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-900 bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Reflections
+          </a>
+          <a
+            href="social_mirror.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Interview
+          </a>
+          <a
+            href="about.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            About
+          </a>
+          <a
+            href="manifesto.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-terracotta-600 hover:bg-terracotta-50 transition font-bold"
+          >
+            My Manifestos
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl fade-in">
+      <div class="text-center mb-16">
+        <span class="text-sage-600 font-bold tracking-wider text-sm uppercase"
+          >Who is the Author?</span
+        >
+        <h1
+          class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-4"
+        >
+          About Myself
+        </h1>
+        <div
+          class="w-24 h-1 bg-gradient-to-r from-terracotta-500 to-sage-500 mx-auto rounded-full"
+        ></div>
+      </div>
+
+      <div
+        class="glass-card rounded-3xl p-8 md:p-12 mb-16 shadow-xl border-t-4 border-terracotta-500"
+      >
+        <div class="flex flex-col md:flex-row gap-10 items-center">
+          <div class="w-full md:w-5/12 relative group">
+            <div
+              class="absolute inset-0 bg-terracotta-200 rounded-2xl transform rotate-6 transition duration-300 group-hover:rotate-3"
+            ></div>
+            <img
+              src="images/TiamzonEAE.jpeg"
+              alt="Edgar Alan Emmanuel B. Tiamzon III"
+              class="relative rounded-2xl w-full h-80 object-cover shadow-lg filter grayscale group-hover:grayscale-0 transition duration-500"
+            />
+          </div>
+
+          <div class="w-full md:w-7/12">
+            <h2 class="text-2xl font-serif font-bold text-charcoal mb-2">
+              Edgar Alan Emmanuel B. Tiamzon III
+            </h2>
+            <p
+              class="text-terracotta-600 font-medium mb-6 uppercase tracking-wide text-sm"
+            >
+              BS Computer Science &bull; Batch 2023 &bull; UPLB
+            </p>
+
+            <div class="space-y-4 text-gray-600 leading-relaxed">
+              <p>
+                <span
+                  class="text-3xl float-left mr-2 mt-[-10px] font-serif text-terracotta-500 text-justify"
+                  >"</span
+                >
+                Hello! I am a 3rd-year Computer Science student at UPLB. As I
+                navigate adulthood, I am currently in a phase of self-discovery
+                and personal growth. This portfolio represents my
+                self-construction journey, exploring the various dimensions that
+                make me who I am.
+              </p>
+              <p>
+                Throughout the process of creating this project, I realized one
+                important thing: understanding oneself is a long and challenging
+                journey. It requires us to explore not only the things we are
+                good at, but also the things we fear. This project reflects how
+                I perceive myself, and how others perceive me as well..
+              </p>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <span
+                class="px-4 py-2 bg-earth-100 text-earth-800 rounded-full text-sm font-medium"
+              >
+                <i class="fas fa-microchip mr-2"></i>Technology
+              </span>
+              <span
+                class="px-4 py-2 bg-sage-100 text-sage-800 rounded-full text-sm font-medium"
+              >
+                <i class="fas fa-dumbbell mr-2"></i>Fitness
+              </span>
+              <span
+                class="px-4 py-2 bg-terracotta-100 text-terracotta-800 rounded-full text-sm font-medium"
+              >
+                <i class="fas fa-puzzle-piece mr-2"></i>Puzzles
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div
+          class="glass-card p-8 rounded-2xl hover:shadow-lg transition duration-300"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 bg-sage-100 rounded-full flex items-center justify-center text-sage-600"
+            >
+              <i class="fas fa-road"></i>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-charcoal">
+              My Journey
+            </h3>
+          </div>
+          <p class="text-gray-600 text-sm text-justify leading-relaxed mb-4">
+            I was born on September 15, 2004, in Pasig City. I am currently
+            living in Marikina City. I am the youngest child, and I always enjoy
+            spending time with my siblings doing our hobbies. Before entering
+            college, I graduated from Senior High School at my alma mater, Sta.
+            Elena High School (SEHS), which helped prepare me for my college
+            journey.
+          </p>
+          <p class="text-gray-600 text-sm italic leading-relaxed">
+            "Never let someone's opinion become your reality." - Les Brown
+          </p>
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="h-32 bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                src="images/siblings.jpeg"
+                class="w-full h-full object-cover opacity-80 hover:scale-110 transition duration-500"
+              />
+            </div>
+            <div class="h-32 bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                src="images/grad.jpeg"
+                class="w-full h-full object-cover opacity-80 hover:scale-110 transition duration-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="glass-card p-8 rounded-2xl hover:shadow-lg transition duration-300"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 bg-earth-200 rounded-full flex items-center justify-center text-earth-700"
+            >
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-charcoal">
+              Passions & Interests
+            </h3>
+          </div>
+          <p class="text-gray-600 text-sm text-justify leading-relaxed mb-4">
+            As a Computer Science student, I enjoy building and exploring new
+            technologies that keep me engaged and motivated. I am particularly
+            interested in the fields of data science and artificial
+            intelligence, which have become my passion over time. One of my
+            recent achievements is that my team ranked Top 3 out of 40 teams in
+            a hackathon held on November 22, 2025. This achievement has opened
+            many opportunities for me to grow and further explore the tech
+            industry.
+          </p>
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="h-32 bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                src="images/comp.jpeg"
+                class="w-full h-full object-cover opacity-80 hover:scale-110 transition duration-500"
+              />
+            </div>
+            <div class="h-32 bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                src="images/link.od.jpeg"
+                class="w-full h-full object-cover opacity-80 hover:scale-110 transition duration-500"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-charcoal text-white py-12 border-t border-gray-800">
+      <div class="container mx-auto px-4 text-center">
+        <div
+          class="w-12 h-12 bg-terracotta-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 font-serif font-bold text-xl"
+        >
+          S
+        </div>
+        <p class="mb-4 font-serif text-xl">
+          "The self is not something ready-made, but something in continuous
+          formation."
+        </p>
+        <p class="text-gray-500 text-sm">
+          &copy; 2025 Self Construction Project • Designed for SAS 1
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>

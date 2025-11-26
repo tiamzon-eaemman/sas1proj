@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manifestos | Self Construction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              earth: {
+                50: "#faf9f6",
+                100: "#f5f0e6",
+                200: "#e6dcc4",
+                300: "#d6c4a0",
+                400: "#c6aa7b",
+                500: "#b08955",
+                600: "#9c7242",
+                700: "#7d5a35",
+                800: "#63472d",
+                900: "#523b28",
+              },
+              terracotta: {
+                500: "#E07A5F",
+                600: "#C86045",
+              },
+              sage: {
+                500: "#81B29A",
+                600: "#6B9A84",
+              },
+              charcoal: "#3D405B",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Inter"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #faf9f6;
+        background-image: radial-gradient(
+            at 0% 0%,
+            rgba(224, 122, 95, 0.08) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(129, 178, 154, 0.1) 0px,
+            transparent 50%
+          );
+        background-attachment: fixed;
+        color: #3d405b;
+      }
+
+      .fade-in {
+        animation: fadeSlideUp 0.5s forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* PREMIUM HOVER EFFECT */
+      .hover-card-premium {
+        /* Cubic bezier for a "springy/smooth" feel */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backface-visibility: hidden;
+      }
+
+      .hover-card-premium:hover {
+        /* Lifts higher and scales slightly */
+        transform: translateY(-12px) scale(1.02);
+        /* Much deeper, softer shadow */
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        z-index: 10;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #e07a5f;
+        transition: width 0.3s;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active-link::after {
+        width: 100%;
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex flex-col font-sans">
+    <nav class="glass sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a
+            href="overview.html"
+            class="flex-shrink-0 flex items-center cursor-pointer group"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center text-white mr-3 font-serif font-bold text-xl shadow-lg group-hover:bg-terracotta-600 transition"
+            >
+              S
+            </div>
+            <div>
+              <span
+                class="block text-lg font-serif font-bold text-charcoal tracking-wide group-hover:text-terracotta-600 transition"
+                >SELF</span
+              >
+              <span
+                class="block text-xs text-gray-500 uppercase tracking-widest -mt-1"
+                >Construction</span
+              >
+            </div>
+          </a>
+
+          <div class="hidden md:flex space-x-8 items-center">
+            <a
+              href="overview.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Overview
+            </a>
+            <a
+              href="reflections.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Reflections
+            </a>
+            <a
+              href="social_mirror.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              Interview
+            </a>
+            <a
+              href="about.html"
+              class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900 transition py-2"
+            >
+              About
+            </a>
+            <a
+              href="manifesto.html"
+              class="px-5 py-2.5 bg-terracotta-500 text-white rounded-full text-sm font-medium shadow-md hover:bg-terracotta-600 hover:shadow-lg transition transform hover:-translate-y-0.5"
+            >
+              Manifestos
+            </a>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-gray-600 hover:text-terracotta-500 focus:outline-none p-2"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 absolute w-full shadow-lg"
+      >
+        <div class="px-4 py-3 space-y-2">
+          <a
+            href="overview.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Overview
+          </a>
+          <a
+            href="reflections.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Reflections
+          </a>
+          <a
+            href="social_mirror.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            Interview
+          </a>
+          <a
+            href="about.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-earth-100 hover:text-terracotta-600 transition"
+          >
+            About
+          </a>
+          <a
+            href="manifesto.html"
+            class="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-terracotta-600 hover:bg-terracotta-50 transition font-bold"
+          >
+            My Manifestos
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-6xl fade-in">
+      <div class="mb-12 text-center max-w-2xl mx-auto">
+        <span class="text-earth-600 font-bold tracking-wider text-sm uppercase"
+          >Part Three</span
+        >
+        <h2
+          class="text-4xl md:text-5xl font-serif font-bold text-charcoal mt-2 mb-6"
+        >
+          Future Manifestos
+        </h2>
+        <p class="text-gray-600">
+          This section represents the contracts I have made with myself. It
+          declares my purpose and commitment to holistic health. These
+          manifestos reflect how I want to improve and define the person I
+          aspire to be. Adhering to them will be the guide to a fruitful
+          journey.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-10">
+        <div
+          class="group bg-white rounded-2xl shadow-lg border-t-8 border-terracotta-500 overflow-hidden hover-card-premium flex flex-col h-full cursor-default"
+        >
+          <div class="p-8 md:p-12 bg-earth-50/50 flex-grow">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="p-3 bg-terracotta-100 rounded-lg text-terracotta-600 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110"
+              >
+                <i class="fas fa-star text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-serif font-bold text-charcoal">
+                My Personal Manifesto
+              </h3>
+            </div>
+
+            <div class="space-y-4">
+              <div
+                class="bg-white p-5 rounded-xl shadow-sm border border-earth-100 transition duration-300 hover:shadow-md hover:border-terracotta-200"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">1. Discipline</h4>
+                    <p class="text-gray-600 text-sm">
+                      I remain consistent even when progress is small. I do not
+                      fear failure; I embrace it as my necessary tutor.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-xl shadow-sm border border-earth-100 transition duration-300 hover:shadow-md hover:border-terracotta-200"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">2. Kindness</h4>
+                    <p class="text-gray-600 text-sm">
+                      I show kindness to everyone. This is non-negotiable, as I
+                      believe that good energy attracts good company.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-xl shadow-sm border border-earth-100 transition duration-300 hover:shadow-md hover:border-terracotta-200"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">3. Ownership</h4>
+                    <p class="text-gray-600 text-sm">
+                      I take full responsibility for my life. I focus endlessly
+                      on my growth and becoming a better version of myself.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-xl shadow-sm border border-earth-100 transition duration-300 hover:shadow-md hover:border-terracotta-200"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">4. Resilience</h4>
+                    <p class="text-gray-600 text-sm">
+                      I show up, especially in tough times. When things are
+                      dark, I choose to be the light.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-xl shadow-sm border border-earth-100 transition duration-300 hover:shadow-md hover:border-terracotta-200"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-terracotta-600 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">5. Integrity</h4>
+                    <p class="text-gray-600 text-sm">
+                      I will be rational, even when I am afraid. I choose the
+                      hard right over the easy wrong.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="group bg-sage-600 rounded-2xl shadow-lg border-t-8 border-sage-800 overflow-hidden hover-card-premium flex flex-col text-white h-full cursor-default"
+        >
+          <div class="p-8 md:p-12 bg-sage-600 flex-grow relative">
+            <div
+              class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-bl-full transition-transform duration-700 group-hover:scale-110 group-hover:-translate-y-2 group-hover:translate-x-2"
+            ></div>
+
+            <div class="flex items-center gap-3 mb-6 relative z-10">
+              <div
+                class="p-3 bg-white/20 rounded-lg text-white transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110"
+              >
+                <i class="fas fa-leaf text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-serif font-bold">Health Manifesto</h3>
+            </div>
+
+            <div class="space-y-4 relative z-10">
+              <div
+                class="bg-white/10 p-5 rounded-xl backdrop-blur-sm transition duration-300 hover:bg-white/15"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-sage-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-sage-100">1. Sleep</h4>
+                    <p class="text-white text-sm opacity-90">
+                      I prioritize sleep for longevity, never viewing recovery
+                      as a sign of exhaustion.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white/10 p-5 rounded-xl backdrop-blur-sm transition duration-300 hover:bg-white/15"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-sage-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-sage-100">2. Temple</h4>
+                    <p class="text-white text-sm opacity-90">
+                      My body is a temple. My food is the foundation for
+                      immunity and a roof against disease.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white/10 p-5 rounded-xl backdrop-blur-sm transition duration-300 hover:bg-white/15"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-sage-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-sage-100">3. Fuel</h4>
+                    <p class="text-white text-sm opacity-90">
+                      Whole foods give me energy and clarity; they are
+                      information for my body and mind.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white/10 p-5 rounded-xl backdrop-blur-sm transition duration-300 hover:bg-white/15"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-sage-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-sage-100">4. Sweat</h4>
+                    <p class="text-white text-sm opacity-90">
+                      Intense workouts are my sign of strength. I remove mental
+                      stress and problems like a sweat.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white/10 p-5 rounded-xl backdrop-blur-sm transition duration-300 hover:bg-white/15"
+              >
+                <div class="flex gap-4">
+                  <div class="w-1 bg-sage-500 rounded-full h-auto"></div>
+                  <div>
+                    <h4 class="font-bold text-sage-100">5. Habit</h4>
+                    <p class="text-white text-sm opacity-90">
+                      I rely on habit, not motivation. Consistency is my
+                      advantage, even when progress is slow.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-charcoal text-white py-12 border-t border-gray-800">
+      <div class="container mx-auto px-4 text-center">
+        <div
+          class="w-12 h-12 bg-terracotta-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 font-serif font-bold text-xl"
+        >
+          S
+        </div>
+        <p class="mb-4 font-serif text-xl">
+          "The self is not something ready-made, but something in continuous
+          formation."
+        </p>
+        <p class="text-gray-500 text-sm">
+          &copy; 2025 Self Construction Project • Designed for SAS 1
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>
